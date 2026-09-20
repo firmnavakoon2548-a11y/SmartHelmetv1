@@ -344,8 +344,8 @@ fun HomeScreen(
         routes = savedRoutes,
         onDismiss = { viewModel.setSavedRoutesOpen(false) },
         onSelectRoute = { route -> viewModel.startNavigation(route, isSimulation = true) },
-        onDeleteRoute = { id -> kotlinx.coroutines.MainScope().run { viewModel.routeRepository.delete(id) } },
-        onToggleFavorite = { id -> kotlinx.coroutines.MainScope().run { viewModel.routeRepository.toggleFavorite(id) } }
+        onDeleteRoute = { id -> viewModel.deleteRoute(id) },
+        onToggleFavorite = { id -> viewModel.toggleFavoriteRoute(id) }
     )
 
     Esp32HubDialog(

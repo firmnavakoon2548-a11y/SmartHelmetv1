@@ -153,6 +153,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun setHelpOpen(open: Boolean) { _isHelpOpen.value = open }
     fun setProximityDialogData(route: Route?) { _proximityDialogData.value = route }
 
+    fun deleteRoute(id: String) {
+        viewModelScope.launch {
+            routeRepository.delete(id)
+            addLog("NAV", "ลบเส้นทางเรียบร้อยแล้ว", "info")
+        }
+    }
+
+    fun toggleFavoriteRoute(id: String) {
+        viewModelScope.launch {
+            routeRepository.toggleFavorite(id)
+        }
+    }
+
     // BLE Connect / Disconnect
     fun connectVirtualHelmet() {
         val res = bleHelmetManager.connectVirtualDevice()
@@ -199,7 +212,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // Navigate to Place / Search Result
     fun startNavigationToPlace(place: SearchPlaceResult) {
         viewModelScope.launch {
-            val currentGps = _gps.value
+            val currentGps = gps.value
             addLog("NAV", "กำลังคำนวณเส้นทางถนนไปยัง: ${place.name}...", "info")
 
             val routeCalc = walkingRouterService.calculateWalkingRoute(
@@ -367,7 +380,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Route Recording
     fun startRouteRecording(name: String, description: String = "") {
-        val current = _gps.value
+        val current = gps.value
         _recordingSession.value = RouteRecordingSession(
             isRecording = true,
             startTime = System.currentTimeMillis(),
@@ -451,7 +464,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 stopNavigation()
             }
             VoiceIntent.STATUS -> {
-                val tel = _telemetry.value
+                val tel = telemetry.value
                 val statusMsg = "สถานะ: ${if (tel.connected) "เชื่อมต่อหมวกแล้ว แบตเตอรี่ ${tel.batteryPercent}%" else "หมวกยังไม่ได้เชื่อมต่อ"} GPS พร้อมใช้งานค่ะ"
                 addLog("ESP32", statusMsg, "info")
                 soundManager.speak(statusMsg)
@@ -470,7 +483,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 soundManager.speak("ลดระดับเสียงเรียบร้อยค่ะ")
             }
             VoiceIntent.OBSTACLE_CHECK -> {
-                val obs = _obstacle.value
+                val obs = obstacle.value
                 val obsMsg = "ระยะสิ่งกีดขวาง: ด้านหน้า ${obs.frontDistanceCm} ซม. ด้านซ้าย ${obs.leftDistanceCm} ซม. ด้านขวา ${obs.rightDistanceCm} ซม. สถานะ ${if (obs.zone == "safe") "ปลอดภัย" else "พบสิ่งกีดขวาง"}"
                 addLog("OBSTACLE", obsMsg, if (obs.zone == "safe") "success" else "warning")
                 soundManager.speak(obsMsg)

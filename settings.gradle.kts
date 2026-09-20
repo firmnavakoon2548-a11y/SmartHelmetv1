@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IoT Smart Helmet for Visually Impaired"
+rootProject.name = "SafeSight"
 include(":app")
