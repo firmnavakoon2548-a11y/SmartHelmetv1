@@ -1,0 +1,6 @@
+{
+  "name": "SafeSight",
+  "description": "SafeSight - หมวกอัจฉริยะนำทางและตรวจจับสิ่งกีดขวางสำหรับผู้พิการทางสายตา พร้อมระบบสั่งการด้วยเสียง เชื่อมต่อ ESP32 และบันทึกเส้นทาง",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
