@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "SafeSight Smart Helmet",
+    "slug": "safesight-smart-helmet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#050B18",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#050B18"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aistudio.safesight.expo",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "SafeSight ใช้ตำแหน่ง GPS เพื่อนำทางและระบุสิ่งกีดขวางสำหรับผู้พิการทางสายตา",
+        "NSMicrophoneUsageDescription": "SafeSight ใช้ไมโครโฟนเพื่อรับคำสั่งเสียงนำทาง"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#050B18"
+      },
+      "package": "com.aistudio.safesight.expo",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECORD_AUDIO",
+        "VIBRATE"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "อนุญาตให้ SafeSight เข้าถึงพิกัด GPS เพื่อนำทางผู้พิการทางสายตา"
+        }
+      ]
+    ]
+  }
+}
